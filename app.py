@@ -1,1 +1,8 @@
-from flask import render_template, make_response, redirect, request
+import tkinter as TK
+from flask import Flask, render_template
+app = Flask(__name__)
+
+@app.route('/')
+def hello_world():
+    #return 'Hello, World!'
+    return render_template('layout.html')
