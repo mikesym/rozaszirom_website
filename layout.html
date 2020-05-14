@@ -1,9 +1,16 @@
 <!doctype html>
 <html>
   <head>
-    
+    <!--define title, favicon, link resources-->
+    <title>{% block title %}{% endblock %}</title>
+
   </head>
   <body>
-    
+    <!-- add navbar -->
+    {% block content %}{% endblock %}
+    <!-- add footer -->
+    <div id="footer">
+      <p>Copyright 2020 Mikesy Mihály</p>
+    </div>
   </body>
 </html>
