@@ -52,22 +52,28 @@
                             'min="0" max="' + item.quantity + '"></div>' +
                         '<div class="col-sm-2"><span> ' + item.unit + ' x </span><span id="price' + item.name + '">' + item.priceRent + '</span><span> Ft</span></div>' +
                         '<div class="form-check col-sm-2"><input type="checkbox" class="form-check-input" id="inputTransport' + item.name + '" name="inputTransport' + item.name + '"' + 
-                            'value="wantsTransport">' +
-                        '<label for="inputTransport' + item.name + '"> Szállítást kérek</label></div>' +
+                            'value="wantsTransport" checked>' +
+                            '<label for="inputTransport' + item.name + '"> Szállítást kérek</label></div>' +
                         '<div class="form-check col-sm-2"><input type="checkbox" class="form-check-input" id="inputService' + item.name + '" name="inputService' + item.name + '"' + 
-                            'value="wantsService">' +
-                        '<label for="inputService' + item.name + '"> Kérem a szolgáltatást</label></div>' +
+                            'value="wantsService" checked>' +
+                            '<label for="inputService' + item.name + '"> Kérem a szolgáltatást ( <span class="priceService">' + item.priceService + '</span> Ft)</label></div>' +
                     '</div>')
 
             });
 
             $("[id^=input]").change(function () {
                 
+                $("#Total").text("0");
+                
                 $("#items").children(".div-input").each(function() {
-
-                    console.log(this.children[1].children[0].value);
                     
-                    //$("#Total").text( $("#Total").text() + this.children[1].children[0].value * child.children[2].children[1].text() );
+                    $("#Total").text( parseFloat($("#Total").text()) + parseFloat(this.children[1].children[0].value * this.children[2].children[1].innerText) );
+
+                    if(this.children[4].children[0].checked){
+
+                        $("#Total").text( parseFloat($("#Total").text()) + parseFloat(this.children[1].children[0].value * this.children[4].children[1].children[0].innerText) );
+
+                    }
 
                 });
                 
@@ -85,7 +91,7 @@
         <h1>Az általad összeállított csomag elemei</h1>
         <h3>Ha mégsem ez az, amire gondoltál, bármikor lépj vissza, és szerkeszd át a csomagot!</h3>
         <div>
-            <p>A rendelés végösszege: <span id="Total"></span> Ft</p>
+            <p>A rendelés végösszege: <span id="Total">0</span> Ft</p>
         </div>
     </div>
     <div id="printable" class="print">
