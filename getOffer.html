@@ -15,89 +15,253 @@
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <script type="text/javascript">
+
+    <style>
         
+        #editable {
+
+            display: visible;
+
+        }
+
+        #printable {
+
+            display: none;
+
+        }
+
+        @media print {
+            
+            /* hide everything, unhide Contract part */
+
+            #editable {
+
+                display: none;
+
+            }
+
+            #printable {
+
+                display: block;
+
+            }
+
+        }
+
+    </style>
+    <script type="text/javascript">
+
         var Catalog = [
-                {
-                    "name": "Szekszoknya",
-                    "label": "Székszoknya",
-                    "quantity": 250,
-                    "step": 10,
-                    "unit": "db",
-                    "priceRent": 400,
-                    "priceTransport": 10,
-                    "priceService": 50,
-                    "detailService": "A székszoknyák (és masnik) felhelyezése a székekre"
-                },
-                {
-                    "name": "Gyertyatarto",
-                    "label": "Gyertyatartó",
-                    "quantity": 12,
-                    "step": 1,
-                    "unit": "db",
-                    "priceRent": 250,
-                    "priceTransport": 10,
-                    "priceService": 50,
-                    "detailService": "A gyertyatartók elhelyezése a megadott helyekre"
-                }
-            ];
-                
+            {
+                "name": "Szekszoknya",
+                "label": "Székszoknya",
+                "quantity": 250,
+                "step": 10,
+                "unit": "db",
+                "priceRent": 400,
+                "priceTransport": 10,
+                "priceService": 50,
+                "detailService": "A székszoknyák (és masnik) felhelyezése a székekre"
+            },
+            {
+                "name": "Gyertyatarto",
+                "label": "Gyertyatartó",
+                "quantity": 12,
+                "step": 1,
+                "unit": "db",
+                "priceRent": 250,
+                "priceTransport": 10,
+                "priceService": 50,
+                "detailService": "A gyertyatartók elhelyezése a megadott helyekre"
+            }
+        ];
+
         $(document).ready(function () {
 
-            Catalog.forEach(function RenderInputs(item){
+            //renders a set of controls for each entry in the JSON storage
+
+            Catalog.forEach(function RenderInputs(item) {
 
                 $("#items").append('<div class="form-group row div-input">' +
-                        '<label class="col-sm-1 col-form-label" for="input' + item.name + '">' + item.label + '</label>' +
-                        '<div class="col-sm-1"><input class="form-control inputQuantity" type="number" name="inputQuantity' + item.name + '" id="input' + item.name + '" step="' + item.step + '"' +
-                            'min="0" max="' + item.quantity + '"></div>' +
-                        '<div class="col-sm-2"><span> ' + item.unit + ' x </span><span id="price' + item.name + '">' + item.priceRent + '</span><span> Ft</span></div>' +
-                        '<div class="form-check col-sm-2"><input type="checkbox" class="form-check-input" id="inputTransport' + item.name + '" name="inputTransport' + item.name + '"' + 
-                            'value="wantsTransport" checked>' +
-                            '<label for="inputTransport' + item.name + '"> Szállítást kérek</label></div>' +
-                        '<div class="form-check col-sm-2"><input type="checkbox" class="form-check-input" id="inputService' + item.name + '" name="inputService' + item.name + '"' + 
-                            'value="wantsService" checked>' +
-                            '<label for="inputService' + item.name + '"> Kérem a szolgáltatást ( <span class="priceService">' + item.priceService + '</span> Ft)</label></div>' +
+                    '<label class="col-sm-1 col-form-label" for="input' + item.name + '">' + item.label + '</label>' +
+                    '<div class="col-sm-1"><input class="form-control inputQuantity" type="number" name="inputQuantity' + item.name + '" id="inputQuantity' + item.name + '" step="' + item.step + '"' +
+                    'min="0" max="' + item.quantity + '"></div>' +
+                    '<div class="col-sm-2"><span> ' + item.unit + ' x </span><span id="price' + item.name + '">' + item.priceRent + '</span><span> Ft</span></div>' +
+                    '<div class="form-check col-sm-2"><input type="checkbox" class="form-check-input" id="inputTransport' + item.name + '" name="inputTransport' + item.name + '"' +
+                    'value="wantsTransport" checked>' +
+                    '<label for="inputTransport' + item.name + '"> Szállítást kérek</label></div>' +
+                    '<div class="form-check col-sm-2"><input type="checkbox" class="form-check-input" id="inputService' + item.name + '" name="inputService' + item.name + '"' +
+                    'value="wantsService" checked>' +
+                    '<label for="inputService' + item.name + '"> Kérem a szolgáltatást ( <span class="priceService">' + item.priceService + '</span> Ft)</label></div>' +
                     '</div>')
 
             });
 
-            $("[id^=input]").change(function () {
-                
+            //adds behaviour to item-related inputs
+
+            $("[id^=inputQuantity]").change(function () {
+
                 $("#Total").text("0");
-                
-                $("#items").children(".div-input").each(function() {
-                    
-                    $("#Total").text( parseFloat($("#Total").text()) + parseFloat(this.children[1].children[0].value * this.children[2].children[1].innerText) );
 
-                    if(this.children[4].children[0].checked){
+                $("#items").children(".div-input").each(function () {
 
-                        $("#Total").text( parseFloat($("#Total").text()) + parseFloat(this.children[1].children[0].value * this.children[4].children[1].children[0].innerText) );
+                    $("#Total").text(parseFloat($("#Total").text()) + parseFloat(this.children[1].children[0].value * this.children[2].children[1].innerText));
+
+                    //if the corresponding service is requested, add its price to the total
+
+                    if (this.children[4].children[0].checked) {
+
+                        $("#Total").text(parseFloat($("#Total").text()) + parseFloat(this.children[1].children[0].value * this.children[4].children[1].children[0].innerText));
 
                     }
 
+                    //if at least one item's transport option is checked, the destion address input must become visible
+
+                    var destionationRequired = false;
+
+                    if (this.children[3].children[0].checked) {
+
+                        destionationRequired = true;
+
+                    }
+
+                    if (destinationRequired) { $("#TransportDestination").show(); }
+
                 });
-                
+
             });
+
+            //adds behaviour to distance controls
+
+            $("#inputDestination").change(function () {
+
+                
+
+            });
+
         });
     </script>
 </head>
 
 <body>
-    <div id="items" style="padding: 30px">
-        <h1>Amiben segíteni tudunk</h1>
-        <h3>Válogasd össze az összes kelléket, amire szükséged lehet, állítsd be, milyen formában kéred a segítségünket!</h3>
-    </div>
-    <div id="summary">
-        <h1>Az általad összeállított csomag elemei</h1>
-        <h3>Ha mégsem ez az, amire gondoltál, bármikor lépj vissza, és szerkeszd át a csomagot!</h3>
-        <div>
-            <p>A rendelés végösszege: <span id="Total">0</span> Ft</p>
+    <div id="editable">
+        <div id="dates"></div>
+            <h1>Dátumok</h1>
+            <div class="form-group row div-input">
+                <label class="col-sm-1 col-form-label" for="inputEventDate">Esemény dátuma</label>
+                <div class="col-sm-1"><input class="form-control inputQuantity" type="date" name="inputEventDate"
+                        id="inputEventDate"></div>
+            </div>
+            <div class="form-group row div-input">
+                <label class="col-sm-1 col-form-label" for="inputDecorationStart">Dekorálás kezdete</label>
+                <div class="col-sm-1"><input class="form-control inputQuantity" type="datetime-local" name="inputDecorationStart"
+                        id="inputDecorationStart"></div>
+                <label class="col-sm-1 col-form-label" for="inputDecorationEnd">Dekorálás vége</label>
+                <div class="col-sm-1"><input class="form-control inputQuantity" type="datetime-local" name="inputDecorationEnd"
+                        id="inputDecorationEnd"></div>
+            </div>
+            <div class="form-group row div-input">
+                <label class="col-sm-1 col-form-label" for="inputCleanupStart">Dekorálás kezdete</label>
+                <div class="col-sm-1"><input class="form-control inputQuantity" type="datetime-local" name="inputCleanupStart"
+                        id="inputCleanupStart"></div>
+                <label class="col-sm-1 col-form-label" for="inputCleanupEnd">Dekorálás vége</label>
+                <div class="col-sm-1"><input class="form-control inputQuantity" type="datetime-local" name="inputCleanupEnd"
+                        id="inputCleanupEnd"></div>
+            </div>
+        <div id="transport">
+            <h1>Helyszín</h1>
+            <div class="form-group row div-input">
+                <label class="col-sm-1 col-form-label" for="inputDestination">Település vagy cím</label>
+                <div class="col-sm-3"><input class="form-control inputQuantity" type="text" name="inputDestination"
+                        id="inputDestination"></div>
+                <label class="col-sm-1 col-form-label" for="inputDistance">Távolság (km, GMaps)</label>
+                <div class="col-sm-1"><input class="form-control inputQuantity" type="number" name="inputDistance"
+                        id="inputDistance"></div>
+                <label class="col-sm-1 col-form-label" for="inputDuration">Időtartam (perc, GMaps)</label>
+                <div class="col-sm-1"><input class="form-control inputQuantity" type="number" name="inputDuration"
+                        id="inputDuration"></div>
+            </div>
+            <a id="aCheckDistance" href="https://www.google.com/maps/dir/G%C3%B6d/N%C3%B3gr%C3%A1ds%C3%A1p,+2685/" target="_blank">Távolság ellenőrzése...</a>
+        </div>
+        <div id="items" style="padding: 30px">
+            <h1>Amiben segíteni tudunk</h1>
+            <h3>Válogasd össze az összes kelléket, amire szükséged lehet, állítsd be, milyen formában kéred a segítségünket!</h3>
+        </div>
+        <div id="summary">
+            <h1>Az általad összeállított csomag elemei</h1>
+            <h3>Ha mégsem ez az, amire gondoltál, bármikor lépj vissza, és szerkeszd át a csomagot!</h3>
+            <div>
+                <p>A rendelés végösszege: <span id="Total">0</span> Ft</p>
+            </div>
+            <button class="btn btn-primary" click="window.print();">Nyomtatás / Mentés PDF-be</button>
+            <button class="btn btn-primary" click="window.print();">Mentés</button>
         </div>
     </div>
     <div id="printable" class="print">
-        <h1>Szerződés/Ajánlatkérés</h1>
-        <h3>A honlapon megadott adatok alapján</h3>
-
+        <h1>MEGBÍZÁSI SZERZŐDÉS</h1>
+        <div>
+            <p>amely létrejött</p>
+            <h4 id="h4ClientName"></h4>
+            <h6 id="h6ClientAddress">lakcíme: </h6>
+            <h6 id="h6ClientBirth">szül. helye és ideje: </h6>
+            <h6 id="h6ClientMotherName">anyja neve: </h6>
+            <h6 id="h6ClientIDType">azonosító dokumentum típusa: </h6>
+            <h6 id="h6ClientIDNumber">azonosító dokumentum száma: </h6>
+            <p>mint megbízó (a továbbiakban: 'Megbízó'), valamint</p>
+            <h4 id="h6CompanyName">Mikesy-Sztankó Szandra egyéni vállalkozó</h4>
+            <h6 id="h4CompanyHQ">2132 Göd, Bozóky Gyula tér 6.</h6>
+            <p>mint megbízott (a továbbiakban: 'Megbízott') között, az alulírott helyen és időben az alábbi feltételekkel:</p>
+        </div>
+        <ol>
+            <li></li>
+            <li>A megbízott a megbízatást elfogadja, amelyet a megbízói érdekeknek megfelelően, személyesen köteles teljesíteni.</li>
+            <li>A megbízás ellátása során a megbízott tudomására jutott minden adat, információ kizárólag a megbízó részére hasznosítható, és titkot képez.</li>
+        </ol>
+        <h4>A honlapon megadott adatok alapján</h4>
+        <table id="itemsContract" class="table">
+            <thead class="thead-dark">
+                <tr id="trHeader">
+                    <th>Tétel megnevezése</th>
+                    <th>Mennyiség</th>
+                    <th>Egységár (br)</th>
+                    <th>Összesen</th>
+                </tr>
+            </thead>
+                <tr id="trRent">
+                    <th colspan="4" style="text-align: center;">Bérlés</th>
+                </tr>
+                <tr id="trRentSubtotal">
+                    <th colspan="3">Bérlés összesen:</th>
+                    <th id="thRentSubtotal" style="text-align: right;"></th>
+                </tr>
+                <tr id="trTransport">
+                    <th colspan=4 style="text-align: center;">Szállítás</th>
+                </tr>
+                <tr id="trTransportSubtotal">
+                    <th colspan="3">Szállítás összesen:</th>
+                    <th id="thTransportSubtotal" style="text-align: right;"></th>
+                </tr>
+                <tr id="trService">
+                    <th colspan=4 style="text-align: center;">Szolgáltatások</th>
+                </tr>
+                <tr id="trServiceSubtotal">
+                    <th colspan="3">Szolgáltatás összesen:</th>
+                    <th id="thServiceSubtotal" style="text-align: right;"></th>
+                </tr>
+                <tr id="trPersonal">
+                    <th colspan=4 style="text-align: center;">Személyi költségek</th>
+                </tr>
+                <tr id="trPersonalSubtotal">
+                    <th colspan="3">Személyi költségek összesen:</th>
+                    <th id="thServiceSubtotal" style="text-align: right;"></th>
+                </tr>
+            <tfoot class="tfoot-dark">
+                <tr id="trTotal">
+                    <th colspan="3">Szerződés összesen:</th>
+                    <th id="thTotal" style="text-align: right;"></th>
+                </tr>
+            </tfoot>
+        </table>
     </div>
 </body>
 
