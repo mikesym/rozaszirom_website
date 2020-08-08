@@ -18,6 +18,13 @@
 
     <style>
         
+        .pad30 {
+
+            padding-top: 30px;
+            padding-left: 30px;
+
+        }
+
         #editable {
 
             display: visible;
@@ -82,7 +89,7 @@
 
             Catalog.forEach(function RenderInputs(item) {
 
-                $("#items").append('<div class="form-group row div-input">' +
+                $("#div-items").append('<div class="form-group row div-input">' +
                     '<label class="col-sm-1 col-form-label" for="input' + item.name + '">' + item.label + '</label>' +
                     '<div class="col-sm-1"><input class="form-control inputQuantity" type="number" name="inputQuantity' + item.name + '" id="inputQuantity' + item.name + '" step="' + item.step + '"' +
                     'min="0" max="' + item.quantity + '"></div>' +
@@ -145,49 +152,79 @@
 
 <body>
     <div id="editable">
-        <div id="dates"></div>
-            <h1>Dátumok</h1>
-            <div class="form-group row div-input">
-                <label class="col-sm-1 col-form-label" for="inputEventDate">Esemény dátuma</label>
-                <div class="col-sm-1"><input class="form-control inputQuantity" type="date" name="inputEventDate"
-                        id="inputEventDate"></div>
+        <!--BASICINFO / names, billing address, email address, phone number, -->
+        <div id="basicinfo" class="pad30">
+            <button type="button" class="btn btn-light" data-toggle="collapse" data-target="#div-basicinfo">Alapadatok</button>
+            <div id="div-basicinfo" class="collapse pad30">
+                <div class="form-group row div-input">
+                    <label class="col-sm-1 col-form-label" for="inputClientName">Ügyfél neve</label>
+                    <div class="col-sm-1"><input class="form-control inputQuantity" type="date" name="inputClientName"
+                            id="inputClientName"></div>
+                    <label class="col-sm-1 col-form-label" for="inputClientPhone">Ügyfél tel.:</label>
+                    <div class="col-sm-1"><input class="form-control inputQuantity" type="text" name="inputClientPhone"
+                            id="inputClientPhone"></div>
+                    <label class="col-sm-1 col-form-label" for="inputClientEmail">Ügyfél email.:</label>
+                    <div class="col-sm-2"><input class="form-control inputQuantity" type="email" name="inputClientEmail"
+                            id="inputClientEmail"></div>
+                </div>
+                <div class="form-group row div-input">
+                    <label class="col-sm-1 col-form-label" for="inputClientAddress">Ügyfél cím.:</label>
+                    <div class="col-sm-6"><input class="form-control inputQuantity" type="text" name="inputClientAddress"
+                            id="inputClientAddress"></div>
+                </div>
             </div>
-            <div class="form-group row div-input">
-                <label class="col-sm-1 col-form-label" for="inputDecorationStart">Dekorálás kezdete</label>
-                <div class="col-sm-1"><input class="form-control inputQuantity" type="datetime-local" name="inputDecorationStart"
-                        id="inputDecorationStart"></div>
-                <label class="col-sm-1 col-form-label" for="inputDecorationEnd">Dekorálás vége</label>
-                <div class="col-sm-1"><input class="form-control inputQuantity" type="datetime-local" name="inputDecorationEnd"
-                        id="inputDecorationEnd"></div>
-            </div>
-            <div class="form-group row div-input">
-                <label class="col-sm-1 col-form-label" for="inputCleanupStart">Dekorálás kezdete</label>
-                <div class="col-sm-1"><input class="form-control inputQuantity" type="datetime-local" name="inputCleanupStart"
-                        id="inputCleanupStart"></div>
-                <label class="col-sm-1 col-form-label" for="inputCleanupEnd">Dekorálás vége</label>
-                <div class="col-sm-1"><input class="form-control inputQuantity" type="datetime-local" name="inputCleanupEnd"
-                        id="inputCleanupEnd"></div>
-            </div>
-        <div id="transport">
-            <h1>Helyszín</h1>
-            <div class="form-group row div-input">
-                <label class="col-sm-1 col-form-label" for="inputDestination">Település vagy cím</label>
-                <div class="col-sm-3"><input class="form-control inputQuantity" type="text" name="inputDestination"
-                        id="inputDestination"></div>
-                <label class="col-sm-1 col-form-label" for="inputDistance">Távolság (km, GMaps)</label>
-                <div class="col-sm-1"><input class="form-control inputQuantity" type="number" name="inputDistance"
-                        id="inputDistance"></div>
-                <label class="col-sm-1 col-form-label" for="inputDuration">Időtartam (perc, GMaps)</label>
-                <div class="col-sm-1"><input class="form-control inputQuantity" type="number" name="inputDuration"
-                        id="inputDuration"></div>
-            </div>
-            <a id="aCheckDistance" href="https://www.google.com/maps/dir/G%C3%B6d/N%C3%B3gr%C3%A1ds%C3%A1p,+2685/" target="_blank">Távolság ellenőrzése...</a>
         </div>
-        <div id="items" style="padding: 30px">
-            <h1>Amiben segíteni tudunk</h1>
-            <h3>Válogasd össze az összes kelléket, amire szükséged lehet, állítsd be, milyen formában kéred a segítségünket!</h3>
+        <div id="dates" class="pad30">
+            <button type="button" class="btn btn-light" data-toggle="collapse" data-target="#div-dates">Dátumok</button>
+            <div id="div-dates" class="collapse pad30">
+                <div class="form-group row div-input">
+                    <label class="col-sm-1 col-form-label" for="inputEventDate">Esemény dátuma</label>
+                    <div class="col-sm-1"><input class="form-control inputQuantity" type="date" name="inputEventDate"
+                            id="inputEventDate"></div>
+                </div>
+                <div class="form-group row div-input">
+                    <label class="col-sm-1 col-form-label" for="inputDecorationStart">Dekorálás kezdete</label>
+                    <div class="col-sm-1"><input class="form-control inputQuantity" type="datetime-local" name="inputDecorationStart"
+                            id="inputDecorationStart"></div>
+                    <label class="col-sm-1 col-form-label" for="inputDecorationEnd">Dekorálás vége</label>
+                    <div class="col-sm-1"><input class="form-control inputQuantity" type="datetime-local" name="inputDecorationEnd"
+                            id="inputDecorationEnd"></div>
+                </div>
+                <div class="form-group row div-input">
+                    <label class="col-sm-1 col-form-label" for="inputCleanupStart">Dekorálás kezdete</label>
+                    <div class="col-sm-1"><input class="form-control inputQuantity" type="datetime-local" name="inputCleanupStart"
+                            id="inputCleanupStart"></div>
+                    <label class="col-sm-1 col-form-label" for="inputCleanupEnd">Dekorálás vége</label>
+                    <div class="col-sm-1"><input class="form-control inputQuantity" type="datetime-local" name="inputCleanupEnd"
+                            id="inputCleanupEnd"></div>
+                </div>
+            </div>
         </div>
-        <div id="summary">
+        <div id="transport" class="pad30">
+            <!--https://developers.google.com/maps/documentation/embed/get-started-->
+            <button type="button" class="btn btn-light" data-toggle="collapse" data-target="#div-transport">Helyszínek</button>
+            <div id="div-transport" class="collapse pad30">
+                <div class="form-group row div-input">
+                    <label class="col-sm-1 col-form-label" for="inputDestination">Település vagy cím</label>
+                    <div class="col-sm-3"><input class="form-control inputQuantity" type="text" name="inputDestination"
+                            id="inputDestination"></div>
+                    <label class="col-sm-1 col-form-label" for="inputDistance">Távolság (km, GMaps)</label>
+                    <div class="col-sm-1"><input class="form-control inputQuantity" type="number" name="inputDistance"
+                            id="inputDistance"></div>
+                    <label class="col-sm-1 col-form-label" for="inputDuration">Időtartam (perc, GMaps)</label>
+                    <div class="col-sm-1"><input class="form-control inputQuantity" type="number" name="inputDuration"
+                            id="inputDuration"></div>
+                </div>
+                <a id="aCheckDistance" href="https://www.google.com/maps/dir/G%C3%B6d/N%C3%B3gr%C3%A1ds%C3%A1p,+2685/" target="_blank">Távolság ellenőrzése...</a>
+            </div>
+        </div>
+        <div id="items" class="pad30">
+            <button type="button" class="btn btn-light" data-toggle="collapse" data-target="#div-items">Igények</button>
+            <div id="div-items" class="collapse pad30">
+                <h3>Válogasd össze az összes kelléket, amire szükséged lehet, állítsd be, milyen formában kéred a segítségünket!</h3>
+            </div>
+        </div>
+        <div id="summary" class="pad30">
             <h1>Az általad összeállított csomag elemei</h1>
             <h3>Ha mégsem ez az, amire gondoltál, bármikor lépj vissza, és szerkeszd át a csomagot!</h3>
             <div>
@@ -198,70 +235,75 @@
         </div>
     </div>
     <div id="printable" class="print">
-        <h1>MEGBÍZÁSI SZERZŐDÉS</h1>
-        <div>
-            <p>amely létrejött</p>
-            <h4 id="h4ClientName"></h4>
-            <h6 id="h6ClientAddress">lakcíme: </h6>
-            <h6 id="h6ClientBirth">szül. helye és ideje: </h6>
-            <h6 id="h6ClientMotherName">anyja neve: </h6>
-            <h6 id="h6ClientIDType">azonosító dokumentum típusa: </h6>
-            <h6 id="h6ClientIDNumber">azonosító dokumentum száma: </h6>
-            <p>mint megbízó (a továbbiakban: 'Megbízó'), valamint</p>
-            <h4 id="h6CompanyName">Mikesy-Sztankó Szandra egyéni vállalkozó</h4>
-            <h6 id="h4CompanyHQ">2132 Göd, Bozóky Gyula tér 6.</h6>
-            <p>mint megbízott (a továbbiakban: 'Megbízott') között, az alulírott helyen és időben az alábbi feltételekkel:</p>
+        <div id="contract">
+            <h1>MEGBÍZÁSI SZERZŐDÉS</h1>
+            <div>
+                <p>amely létrejött</p>
+                <h4 id="h4ClientName"></h4>
+                <h6 id="h6ClientAddress">lakcíme: </h6>
+                <h6 id="h6ClientBirth">szül. helye és ideje: </h6>
+                <h6 id="h6ClientMotherName">anyja neve: </h6>
+                <h6 id="h6ClientIDType">azonosító dokumentum típusa: </h6>
+                <h6 id="h6ClientIDNumber">azonosító dokumentum száma: </h6>
+                <p>mint megbízó (a továbbiakban: 'Megbízó'), valamint</p>
+                <h4 id="h6CompanyName">Mikesy-Sztankó Szandra egyéni vállalkozó</h4>
+                <h6 id="h4CompanyHQ">2132 Göd, Bozóky Gyula tér 6.</h6>
+                <p>mint megbízott (a továbbiakban: 'Megbízott') között, az alulírott helyen és időben az alábbi feltételekkel:</p>
+            </div>
+            <ol>
+                <li></li>
+                <li>A megbízott a megbízatást elfogadja, amelyet a megbízói érdekeknek megfelelően, személyesen köteles teljesíteni.</li>
+                <li>A megbízás ellátása során a megbízott tudomására jutott minden adat, információ kizárólag a megbízó részére hasznosítható, és titkot képez.</li>
+            </ol>
+            <h4>A honlapon megadott adatok alapján</h4>
+            <table id="itemsContract" class="table">
+                <thead class="thead-dark">
+                    <tr id="trHeader">
+                        <th>Tétel megnevezése</th>
+                        <th>Mennyiség</th>
+                        <th>Egységár (br)</th>
+                        <th>Összesen</th>
+                    </tr>
+                </thead>
+                    <tr id="trRent">
+                        <th colspan="4" style="text-align: center;">Bérlés</th>
+                    </tr>
+                    <tr id="trRentSubtotal">
+                        <th colspan="3">Bérlés összesen:</th>
+                        <th id="thRentSubtotal" style="text-align: right;"></th>
+                    </tr>
+                    <tr id="trTransport">
+                        <th colspan=4 style="text-align: center;">Szállítás</th>
+                    </tr>
+                    <tr id="trTransportSubtotal">
+                        <th colspan="3">Szállítás összesen:</th>
+                        <th id="thTransportSubtotal" style="text-align: right;"></th>
+                    </tr>
+                    <tr id="trService">
+                        <th colspan=4 style="text-align: center;">Szolgáltatások</th>
+                    </tr>
+                    <tr id="trServiceSubtotal">
+                        <th colspan="3">Szolgáltatás összesen:</th>
+                        <th id="thServiceSubtotal" style="text-align: right;"></th>
+                    </tr>
+                    <tr id="trPersonal">
+                        <th colspan=4 style="text-align: center;">Személyi költségek</th>
+                    </tr>
+                    <tr id="trPersonalSubtotal">
+                        <th colspan="3">Személyi költségek összesen:</th>
+                        <th id="thServiceSubtotal" style="text-align: right;"></th>
+                    </tr>
+                <tfoot class="tfoot-dark">
+                    <tr id="trTotal">
+                        <th colspan="3">Szerződés összesen:</th>
+                        <th id="thTotal" style="text-align: right;"></th>
+                    </tr>
+                </tfoot>
+            </table>
         </div>
-        <ol>
-            <li></li>
-            <li>A megbízott a megbízatást elfogadja, amelyet a megbízói érdekeknek megfelelően, személyesen köteles teljesíteni.</li>
-            <li>A megbízás ellátása során a megbízott tudomására jutott minden adat, információ kizárólag a megbízó részére hasznosítható, és titkot képez.</li>
-        </ol>
-        <h4>A honlapon megadott adatok alapján</h4>
-        <table id="itemsContract" class="table">
-            <thead class="thead-dark">
-                <tr id="trHeader">
-                    <th>Tétel megnevezése</th>
-                    <th>Mennyiség</th>
-                    <th>Egységár (br)</th>
-                    <th>Összesen</th>
-                </tr>
-            </thead>
-                <tr id="trRent">
-                    <th colspan="4" style="text-align: center;">Bérlés</th>
-                </tr>
-                <tr id="trRentSubtotal">
-                    <th colspan="3">Bérlés összesen:</th>
-                    <th id="thRentSubtotal" style="text-align: right;"></th>
-                </tr>
-                <tr id="trTransport">
-                    <th colspan=4 style="text-align: center;">Szállítás</th>
-                </tr>
-                <tr id="trTransportSubtotal">
-                    <th colspan="3">Szállítás összesen:</th>
-                    <th id="thTransportSubtotal" style="text-align: right;"></th>
-                </tr>
-                <tr id="trService">
-                    <th colspan=4 style="text-align: center;">Szolgáltatások</th>
-                </tr>
-                <tr id="trServiceSubtotal">
-                    <th colspan="3">Szolgáltatás összesen:</th>
-                    <th id="thServiceSubtotal" style="text-align: right;"></th>
-                </tr>
-                <tr id="trPersonal">
-                    <th colspan=4 style="text-align: center;">Személyi költségek</th>
-                </tr>
-                <tr id="trPersonalSubtotal">
-                    <th colspan="3">Személyi költségek összesen:</th>
-                    <th id="thServiceSubtotal" style="text-align: right;"></th>
-                </tr>
-            <tfoot class="tfoot-dark">
-                <tr id="trTotal">
-                    <th colspan="3">Szerződés összesen:</th>
-                    <th id="thTotal" style="text-align: right;"></th>
-                </tr>
-            </tfoot>
-        </table>
+        <div id="plan" style="page-break-before: always">
+            <h1>MEGVALÓSÍTÁSI TERV</h1>
+        </div>
     </div>
 </body>
 
