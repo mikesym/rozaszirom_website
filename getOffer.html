@@ -53,6 +53,12 @@
 
             }
 
+            .prnt-doc{
+
+                page-break-after: always;
+
+            }
+
         }
 
     </style>
@@ -145,6 +151,34 @@
                 
 
             });
+            
+            //project status buttons
+
+            $("label[class^=projectStatusOption]").click(function(){
+
+                //reset css for all other buttons
+
+                $(this).parent().children().removeClass("btn-warning")
+
+                $(this).parent().children().removeClass("btn-success")
+
+                $(this).parent().children().removeClass("btn-light")
+
+                //mark previous statuses with success
+
+                $(this).prevAll().addClass("btn-success")
+
+                //mark next statuses with success
+
+                $(this).nextAll().addClass("btn-light")
+
+                //mark current status with warning
+
+                $(this).addClass("btn-warning");
+
+                console.log($(this).parent().html())
+
+            });
 
         });
     </script>
@@ -152,6 +186,15 @@
 
 <body>
     <div id="editable">
+        <div id="projectStatus" class="pad30">
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <label class="projectStatusOption btn btn-light active"><input type="radio" name="options" id="ajanlat" autocomplete="off"> Ajánlat </label>
+                <label class="projectStatusOption btn btn-light"><input type="radio" name="options" id="szerzodes" autocomplete="off"> Szerződés </label>
+                <label class="projectStatusOption btn btn-light"><input type="radio" name="options" id="teljesites" autocomplete="off"> Teljesítés </label>
+                <label class="projectStatusOption btn btn-light"><input type="radio" name="options" id="elszamolas" autocomplete="off"> Elszámolás </label>
+                <label class="projectStatusOption btn btn-light"><input type="radio" name="options" id="lezarva" autocomplete="off"> Lezárva </label>
+              </div>
+        </div>
         <!--BASICINFO / names, billing address, email address, phone number, -->
         <div id="basicinfo" class="pad30">
             <button type="button" class="btn btn-light" data-toggle="collapse" data-target="#div-basicinfo">Alapadatok</button>
@@ -231,11 +274,29 @@
                 <p>A rendelés végösszege: <span id="Total">0</span> Ft</p>
             </div>
             <button class="btn btn-primary" click="window.print();">Nyomtatás / Mentés PDF-be</button>
-            <button class="btn btn-primary" click="window.print();">Mentés</button>
+            <a class="btn btn-primary" download="test.json" href="data:text/plain;charset=utf-8,"> Mentés</a>
+            <!-- download: projectTitle + ".json"-->
+            <!-- href: 'data:text/plain;charset=utf-8,'+encodeURIComponent(JSON.stringify(project)) -->
         </div>
     </div>
     <div id="printable" class="print">
-        <div id="contract">
+        <div id="offer" class="prnt-doc">
+            <h1>AJÁNLAT</h1>
+            <h2 id="offerTitle"></h2>
+            <h3><span id="offerLocation"></span> - <span id="offerDate"></span></h3>
+            <div id="offerMeta">
+                <p><span>Színek: </span><span id="colours"></span></p>
+                <p><span>Stílus: </span><span id="style"></span></p>
+                <p><span>Virágok: </span><span id="flowers"></span></p>
+            </div>
+            <div id="offerItems">
+
+            </div>
+            <div id="offerFooter">
+                <p>Kelt: Göd, <span id="offerCreateDate"></span></p>
+            </div>
+        </div>
+        <div id="contract" class="prnt-doc">
             <h1>MEGBÍZÁSI SZERZŐDÉS</h1>
             <div>
                 <p>amely létrejött</p>
